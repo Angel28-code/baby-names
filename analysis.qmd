@@ -1,0 +1,28 @@
+---
+title: "Popularity of the Name Angel Over Time"
+format: html
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r}
+library(tidyverse)
+
+names_df <- read_csv("ssa-baby-names.csv")
+
+names_df |>
+  filter(name == "Angel") |>
+  ggplot(aes(x = year, y = count, color = sex)) +
+  geom_line(linewidth = 1) +
+  labs(
+    title = "Babies Named 'Angel' in the U.S. (1880–2025)",
+    subtitle = "Annual count by sex from Social Security Administration records",
+    x = "Year",
+    y = "Number of Babies",
+    color = "Sex",
+    caption = "Source: Social Security Administration"
+  ) +
+  theme_minimal()
+```
