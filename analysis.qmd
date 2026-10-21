@@ -12,13 +12,37 @@ library(tidyverse)
 
 names_df <- read_csv("ssa-baby-names.csv")
 
+famous_angels <- tibble(
+  year = c(1942, 1988, 2002),
+  y_pos = c(5000, 8000, 11000),
+  label = c(
+    "Angel Cordero Jr.\n(b. 1942)",
+    "Ángel Di María\n(b. 1988)",
+    "Angel Reese\n(b. 2002)"
+  )
+)
+
 names_df |>
   filter(name == "Angel") |>
   ggplot(aes(x = year, y = count, color = sex)) +
   geom_line(linewidth = 1) +
+  geom_vline(
+    data = famous_angels,
+    aes(xintercept = year),
+    linetype = "dashed",
+    color = "gray40"
+  ) +
+  geom_text(
+    data = famous_angels,
+    aes(x = year, y = y_pos, label = label),
+    inherit.aes = FALSE,
+    hjust = 1.05,
+    size = 3.2,
+    color = "gray20"
+  ) +
   labs(
     title = "Babies Named 'Angel' in the U.S. (1880–2025)",
-    subtitle = "Annual count by sex from Social Security Administration records",
+    subtitle = "Annual count by sex with birth years of famous people named Angel",
     x = "Year",
     y = "Number of Babies",
     color = "Sex",
@@ -26,3 +50,10 @@ names_df |>
   ) +
   theme_minimal()
 ```
+
+## Famous People Named Angel
+
+- **Angel Cordero Jr. (born 1942):** Hall of Fame thoroughbred horse racing jockey and three-time Kentucky Derby winner.
+- **Angel McCoughtry (born 1986):** Two-time Olympic gold medalist and WNBA basketball star.
+- **Ángel Di María (born 1988):** Argentine professional soccer player and 2022 FIFA World Cup champion.
+- **Angel Reese (born 2002):** NCAA champion and WNBA basketball star.
